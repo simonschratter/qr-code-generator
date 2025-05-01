@@ -13,10 +13,10 @@ public class QrCodeGenerator {
 
     private QrCodeGenerator() {}
 
-    public static byte[] generate(String qrContent) throws WriterException, IOException {
+    public static byte[] generate(String qrContent, String format) throws WriterException, IOException {
         BitMatrix matrix = new MultiFormatWriter().encode(qrContent, BarcodeFormat.QR_CODE, 300, 300);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        MatrixToImageWriter.writeToStream(matrix, "PNG", stream);
+        MatrixToImageWriter.writeToStream(matrix, format, stream);
         return stream.toByteArray();
     }
 }

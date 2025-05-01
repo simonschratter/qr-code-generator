@@ -17,7 +17,8 @@ export class WifiQrGeneratorComponent {
     ssid: new FormControl('', Validators.required),
     password: new FormControl(),
     encryption: new FormControl('WPA', Validators.required),
-    hidden: new FormControl(false)
+    hidden: new FormControl(false),
+    imageType: new FormControl('JPG', Validators.required),
   });
 
   constructor(private qrService: WifiQrService) {

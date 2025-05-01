@@ -23,6 +23,15 @@
         Hidden Network
     </label>
 
+  <label>
+    Image Type:
+    <select formControlName="imageType">
+      <option value="JPG">JPG</option>
+      <option value="SVG">SVG</option>
+      <option value="PNG">PNG</option>
+    </select>
+  </label>
+
     <button [disabled]="!form.valid" type="submit">Generate QR Code</button>
 </form>
 <img *ngIf="qrImage" [src]="qrImage" alt="Generated Wi-Fi QR Code" />
