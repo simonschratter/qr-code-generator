@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="generateQrCode()">
+    <label>
+        SSID:
+        <input formControlName="ssid"/>
+    </label>
+
+    <label>
+        Password:
+        <input formControlName="password" type="text"/>
+    </label>
+
+    <label>
+        Encryption:
+        <select formControlName="encryption">
+            <option value="WPA">WPA/WPA2</option>
+            <option value="WEP">WEP</option>
+            <option value="nopass">None</option>
+        </select>
+    </label>
+
+    <label>
+        <input type="checkbox" formControlName="hidden"/>
+        Hidden Network
+    </label>
+
+    <button [disabled]="!form.valid" type="submit">Generate QR Code</button>
+</form>
+<img *ngIf="qrImage" [src]="qrImage" alt="Generated Wi-Fi QR Code" />
