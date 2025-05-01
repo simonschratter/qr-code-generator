@@ -1,28 +1,24 @@
-<form [formGroup]="form" (ngSubmit)="generateQrCode()">
-    <label>
-        SSID:
-        <input formControlName="ssid"/>
-    </label>
-
-    <label>
-        Password:
-        <input formControlName="password" type="text"/>
-    </label>
-
-    <label>
-        Encryption:
-        <select formControlName="encryption">
-            <option value="WPA">WPA/WPA2</option>
-            <option value="WEP">WEP</option>
-            <option value="nopass">None</option>
-        </select>
-    </label>
-
-    <label>
-        <input type="checkbox" formControlName="hidden"/>
-        Hidden Network
-    </label>
-
+<form [formGroup]="wifiForm" (ngSubmit)="generateWifiQrCode()">
+  <label>
+    SSID:
+    <input formControlName="ssid"/>
+  </label>
+  <label>
+    Password:
+    <input formControlName="password" type="text"/>
+  </label>
+  <label>
+    Encryption:
+    <select formControlName="encryption">
+      <option value="WPA">WPA/WPA2</option>
+      <option value="WEP">WEP</option>
+      <option value="nopass">None</option>
+    </select>
+  </label>
+  <label>
+    <input type="checkbox" formControlName="hidden"/>
+    Hidden Network
+  </label>
   <label>
     Image Type:
     <select formControlName="imageType">
@@ -31,7 +27,21 @@
       <option value="PNG">PNG</option>
     </select>
   </label>
-
-    <button [disabled]="!form.valid" type="submit">Generate QR Code</button>
+  <button [disabled]="!wifiForm.valid" type="submit">Generate Wifi QR Code</button>
 </form>
-<img *ngIf="qrImage" [src]="qrImage" alt="Generated Wi-Fi QR Code" />
+<form [formGroup]="urlForm" (ngSubmit)="generateUrlQrCode()">
+  <label>
+    Url:
+    <input formControlName="url" type="text"/>
+  </label>
+  <label>
+    Image Type:
+    <select formControlName="imageType">
+      <option value="JPG">JPG</option>
+      <option value="SVG">SVG</option>
+      <option value="PNG">PNG</option>
+    </select>
+  </label>
+  <button [disabled]="!urlForm.valid" type="submit">Generate Url QR Code</button>
+</form>
+<img *ngIf="qrImage" [src]="qrImage" alt="Generated QR Code"/>

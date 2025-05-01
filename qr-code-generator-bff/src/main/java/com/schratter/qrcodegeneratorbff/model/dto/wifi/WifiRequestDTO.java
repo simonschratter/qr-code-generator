@@ -1,33 +1,26 @@
 package com.schratter.qrcodegeneratorbff.model.dto.wifi;
 
-import com.schratter.qrcodegeneratorbff.exception.InvalidImageTypeException;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.schratter.qrcodegeneratorbff.model.dto.QrCodeRequestDTO;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class WifiRequestDTO {
+public class WifiRequestDTO extends QrCodeRequestDTO {
 
     @NotNull(message = "SSID must not be null")
+    @NotBlank(message = "SSID must not be blank")
     private String ssid;
 
     private String password;
 
     @NotNull(message = "Encryption must not be null")
+    @NotBlank(message = "Encryption must not be blank")
     private String encryption;
 
     @NotNull
     private boolean hidden;
 
-    @NotNull(message = "Image type must not be null")
-    @Schema(description = "Image type to generate", allowableValues = {"PNG", "JPG"})
-    private String imageType;
-
-    public WifiRequestImageTypeDTO getValidatedImageType() {
-        try {
-            return WifiRequestImageTypeDTO.fromString(imageType); // throws if invalid
-        } catch (IllegalArgumentException _) {
-            throw new InvalidImageTypeException(imageType);
-        }
-    }
 }

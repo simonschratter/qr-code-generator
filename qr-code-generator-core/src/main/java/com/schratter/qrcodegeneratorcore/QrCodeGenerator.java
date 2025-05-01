@@ -11,12 +11,18 @@ import java.io.IOException;
 
 public class QrCodeGenerator {
 
-    private QrCodeGenerator() {}
+    private QrCodeGenerator() {
+    }
 
-    public static byte[] generate(String qrContent, String format) throws WriterException, IOException {
-        BitMatrix matrix = new MultiFormatWriter().encode(qrContent, BarcodeFormat.QR_CODE, 300, 300);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        MatrixToImageWriter.writeToStream(matrix, format, stream);
-        return stream.toByteArray();
+    public static byte[] generate(String content, int width, int height, String imageFormat) throws WriterException, IOException {
+        BitMatrix matrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height);
+
+        if (imageFormat.equalsIgnoreCase("svg")) {
+            return SvgQrCodeWriter.toSvg(matrix);
+        } else {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(matrix, imageFormat, stream);
+            return stream.toByteArray();
+        }
     }
 }

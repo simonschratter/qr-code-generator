@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ReactiveFormsModule, Validators, FormGroup, FormControl} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {WifiQrService} from './wifi-generator.service';
+import {QrService} from './wifi-generator.service';
 
 @Component({
   standalone: true,
@@ -13,25 +13,41 @@ import {WifiQrService} from './wifi-generator.service';
 
 export class WifiQrGeneratorComponent {
   qrImage: string | null = null;
-  form: FormGroup = new FormGroup({
+  wifiForm: FormGroup = new FormGroup({
     ssid: new FormControl('', Validators.required),
     password: new FormControl(),
     encryption: new FormControl('WPA', Validators.required),
     hidden: new FormControl(false),
-    imageType: new FormControl('JPG', Validators.required),
+    imageType: new FormControl('JPG', Validators.required)
   });
 
-  constructor(private qrService: WifiQrService) {
+  urlForm: FormGroup = new FormGroup({
+    url: new FormControl('', Validators.required),
+    imageType: new FormControl('JPG', Validators.required)
+  });
+
+  constructor(private qrService: QrService) {
   }
 
 
-  public generateQrCode(): void {
-    if (this.form.valid) {
-      this.qrService.generateWifiQr(this.form.value).subscribe((blob: Blob) => {
+  public generateWifiQrCode(): void {
+    if (this.wifiForm.valid) {
+      this.qrService.generateWifiQr(this.wifiForm.value).subscribe((blob: Blob) => {
         const reader = new FileReader();
         reader.onload = () => {
           this.qrImage = reader.result as string;
-          console.log(this.qrImage);
+        };
+        reader.readAsDataURL(blob);
+      });
+    }
+  }
+
+  public generateUrlQrCode(): void {
+    if (this.urlForm.valid) {
+      this.qrService.generateUrlQr(this.urlForm.value).subscribe((blob: Blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.qrImage = reader.result as string;
         };
         reader.readAsDataURL(blob);
       });

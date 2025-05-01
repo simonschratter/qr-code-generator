@@ -1,10 +1,11 @@
 package com.schratter.qrcodegeneratorbff.controller;
 
 import com.google.zxing.WriterException;
+import com.schratter.qrcodegeneratorbff.model.dto.RequestImageType;
+import com.schratter.qrcodegeneratorbff.model.dto.url.UrlRequestDTO;
 import com.schratter.qrcodegeneratorbff.model.dto.wifi.WifiRequestDTO;
 import com.schratter.qrcodegeneratorbff.service.QrCodeService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,21 @@ public class QrCodeController {
 
     @PostMapping("/wifi")
     public ResponseEntity<byte[]> generateWifiQr(@Valid @RequestBody WifiRequestDTO wifi) throws IOException, WriterException {
+        RequestImageType imageType = wifi.getValidatedImageType();
         byte[] image = qrCodeService.generateWifiQrCode(wifi);
-        return new ResponseEntity<>(image, HttpStatus.OK);
+
+        return ResponseEntity.ok()
+                .contentType(imageType.getMimeType())
+                .body(image);
+    }
+
+    @PostMapping("/url")
+    public ResponseEntity<byte[]> generateUrlQr(@Valid @RequestBody UrlRequestDTO url) throws IOException, WriterException {
+        RequestImageType imageType = url.getValidatedImageType();
+        byte[] image = qrCodeService.generateUrlQrCode(url);
+
+        return ResponseEntity.ok()
+                .contentType(imageType.getMimeType())
+                .body(image);
     }
 }
