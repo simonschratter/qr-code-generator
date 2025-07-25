@@ -1,0 +1,73 @@
+/* General body style */
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f9; /* mild grey background */
+  padding: 20px; /* padding around the page */
+  color: #333; /* darker font color for better readability */
+}
+
+/* Style for container of elements */
+form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+label {
+  margin-bottom: 0.5em;
+  color: #666;
+  display: block;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+button {
+  background-color: #0056b3; /* Blue background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+button:hover {
+  background-color: #004494; /* Darker blue on hover */
+}
+
+/* Style for titles if added */
+h1, h2, h3 {
+  color: #333;
+}
+
+/* Special styles for the image */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+}

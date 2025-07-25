@@ -20,14 +20,40 @@
         <tag/>
         <url/>
     </scm>
-    <properties>
-        <java.version>23</java.version>
-    </properties>
     <packaging>pom</packaging>
     <modules>
         <module>qr-code-generator-bff</module>
         <module>qr-code-generator-core</module>
         <module>qr-code-generator-angular</module>
+        <module>qr-code-generator-service</module>
     </modules>
+
+    <properties>
+        <java.version>23</java.version>
+        <spring.version>3.4.5</spring.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>

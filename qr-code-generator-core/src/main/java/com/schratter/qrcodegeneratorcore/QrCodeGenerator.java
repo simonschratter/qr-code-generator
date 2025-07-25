@@ -14,7 +14,15 @@ public class QrCodeGenerator {
     private QrCodeGenerator() {
     }
 
+    public static byte[] generate(String content, String imageFormat) throws IOException, WriterException {
+        return generateQrCode(content, 300, 300, imageFormat);
+    }
+
     public static byte[] generate(String content, int width, int height, String imageFormat) throws WriterException, IOException {
+        return generateQrCode(content, width, height, imageFormat);
+    }
+
+    private static byte[] generateQrCode(String content, int width, int height, String imageFormat) throws WriterException, IOException {
         BitMatrix matrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height);
 
         if (imageFormat.equalsIgnoreCase("svg")) {

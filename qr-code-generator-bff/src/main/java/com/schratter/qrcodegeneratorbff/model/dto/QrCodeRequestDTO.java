@@ -1,6 +1,5 @@
 package com.schratter.qrcodegeneratorbff.model.dto;
 
-
 import com.schratter.qrcodegeneratorbff.exception.InvalidImageTypeException;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

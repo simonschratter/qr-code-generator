@@ -4,7 +4,8 @@ import com.google.zxing.WriterException;
 import com.schratter.qrcodegeneratorbff.model.dto.RequestImageType;
 import com.schratter.qrcodegeneratorbff.model.dto.url.UrlRequestDTO;
 import com.schratter.qrcodegeneratorbff.model.dto.wifi.WifiRequestDTO;
-import com.schratter.qrcodegeneratorbff.service.QrCodeService;
+import com.schratter.qrcodegeneratorservice.dao.entity.QrCodeEntity;
+import com.schratter.qrcodegeneratorservice.service.QrCodeService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,22 +24,23 @@ public class QrCodeController {
     }
 
     @PostMapping("/wifi")
-    public ResponseEntity<byte[]> generateWifiQr(@Valid @RequestBody WifiRequestDTO wifi) throws IOException, WriterException {
-        RequestImageType imageType = wifi.getValidatedImageType();
-        byte[] image = qrCodeService.generateWifiQrCode(wifi);
+    public ResponseEntity<byte[]> generateWifiQr(@Valid @RequestBody WifiRequestDTO wifiRequest) throws IOException, WriterException {
+        RequestImageType imageType = wifiRequest.getValidatedImageType();
+        String content = String.format("WIFI:T:%s;S:%s;P:%s;H:%s;;", wifiRequest.getEncryption(), wifiRequest.getSsid(), wifiRequest.getPassword(), wifiRequest.isHidden());
+        QrCodeEntity qrCodeEntity = qrCodeService.generateWifiQrCode(content, imageType.getValue());
 
         return ResponseEntity.ok()
                 .contentType(imageType.getMimeType())
-                .body(image);
+                .body(qrCodeEntity.getImage());
     }
 
     @PostMapping("/url")
-    public ResponseEntity<byte[]> generateUrlQr(@Valid @RequestBody UrlRequestDTO url) throws IOException, WriterException {
-        RequestImageType imageType = url.getValidatedImageType();
-        byte[] image = qrCodeService.generateUrlQrCode(url);
+    public ResponseEntity<byte[]> generateUrlQr(@Valid @RequestBody UrlRequestDTO urlRequest) throws IOException, WriterException {
+        RequestImageType imageType = urlRequest.getValidatedImageType();
+        QrCodeEntity qrCodeEntity = qrCodeService.generateUrlQrCode(urlRequest.getUrl(), imageType.getValue());
 
         return ResponseEntity.ok()
                 .contentType(imageType.getMimeType())
-                .body(image);
+                .body(qrCodeEntity.getImage());
     }
 }
